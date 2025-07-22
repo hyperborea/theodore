@@ -79,4 +79,34 @@ export const levels: Level[] = [
       hills: true,
     },
   },
+  {
+    id: 3,
+    name: "Double Jump Challenge",
+    platforms: [
+      // Starting platform
+      { x: 1, y: 1 },
+      { x: 2, y: 1 },
+      { x: 3, y: 1 },
+
+      // First jump platform (medium height)
+      { x: 6, y: 3 },
+      { x: 7, y: 3 },
+
+      // Second platform (higher, requires double jump)
+      { x: 10, y: 5 },
+      { x: 11, y: 5 },
+
+      // Final platform where cake is located (very high)
+      { x: 14, y: 6 },
+      { x: 15, y: 6 },
+    ],
+    playerStartX: 0,
+    playerStartY: 550,
+    cakeX: 900,
+    cakeY: 220,
+    background: {
+      clouds: true,
+      hills: true,
+    },
+  },
 ];

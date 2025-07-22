@@ -23,7 +23,7 @@ export function Game() {
         default: "arcade",
         arcade: {
           gravity: { x: 0, y: 900 },
-          debug: true,
+          debug: false,
           fps: 120, // Increase physics update rate to reduce jitter
         },
       },
