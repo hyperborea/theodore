@@ -3,6 +3,7 @@ import { Turtle } from "~/objects/Turtle";
 
 export class MainScene extends Phaser.Scene {
   private player!: Turtle;
+  private jumpKeyPressed: boolean = false;
 
   constructor() {
     super("MainScene");
@@ -37,9 +38,21 @@ export class MainScene extends Phaser.Scene {
       player.playAnimation("idle");
     }
 
-    if (cursors.up?.isDown && player.body?.touching.down) {
+    // Reset jump counter when touching ground
+    if (player.body?.touching.down) {
+      player.jumpCount = 0;
+    }
+
+    // Double jump logic - only jump on key press, not hold
+    if (cursors.up?.isDown && !this.jumpKeyPressed && player.jumpCount < player.maxJumps) {
       player.setVelocityY(-330);
-      // player.playAnimation("jump");
+      player.jumpCount++;
+      this.jumpKeyPressed = true;
+    }
+    
+    // Reset jump key tracking when released
+    if (!cursors.up?.isDown) {
+      this.jumpKeyPressed = false;
     }
   }
 }
