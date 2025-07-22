@@ -17,7 +17,7 @@ export class MainScene extends Phaser.Scene {
   private levelManager!: LevelManager;
   private cake!: Cake;
   private victoryScreen!: VictoryScreen;
-  private currentLevelId: number = 4;
+  private currentLevelId: number = 1;
 
   constructor() {
     super("MainScene");

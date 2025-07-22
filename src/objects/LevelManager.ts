@@ -66,53 +66,44 @@ export class LevelManager {
   }
 
   createBackground() {
-    if (!this.currentLevel?.background) return;
+    if (!this.currentLevel?.bottomBackgrounds) return;
 
-    const { clouds, hills } = this.currentLevel.background;
+    // Always add clouds at the top
+    const cloudTexture = this.scene.textures
+      .get("backgrounds")
+      .get("background_clouds");
+    const cloudWidth = cloudTexture.width;
+    const cloudHeight = cloudTexture.height;
+    const numCloudTiles = Math.ceil(this.scene.scale.width / cloudWidth) + 1;
 
-    // Add clouds at the top
-    if (clouds) {
-      const cloudTexture = this.scene.textures
-        .get("backgrounds")
-        .get("background_clouds");
-      const cloudWidth = cloudTexture.width;
-      const cloudHeight = cloudTexture.height;
-      const numCloudTiles = Math.ceil(this.scene.scale.width / cloudWidth) + 1;
-
-      for (let i = 0; i < numCloudTiles; i++) {
-        this.scene.add
-          .image(
-            i * cloudWidth,
-            cloudHeight / 2,
-            "backgrounds",
-            "background_clouds"
-          )
-          .setOrigin(0, 0.5);
-      }
+    for (let i = 0; i < numCloudTiles; i++) {
+      this.scene.add
+        .image(
+          i * cloudWidth,
+          cloudHeight / 2,
+          "backgrounds",
+          "background_clouds"
+        )
+        .setOrigin(0, 0.5);
     }
 
-    // Add randomized hills background across the bottom
-    if (hills) {
-      const hillsTextures = [
-        "background_color_hills",
-        "background_color_trees",
-      ];
-      const bgWidth = 256;
-      const bgHeight = 256;
-      const numTiles = Math.ceil(this.scene.scale.width / bgWidth) + 1;
+    // Add bottom backgrounds from the level configuration array
+    const bgWidth = 256;
+    const bgHeight = 256;
+    const numTiles = Math.ceil(this.scene.scale.width / bgWidth) + 1;
 
-      for (let i = 0; i < numTiles; i++) {
-        const randomHillsTexture =
-          hillsTextures[Math.floor(Math.random() * hillsTextures.length)];
-        this.scene.add
-          .image(
-            i * bgWidth,
-            this.scene.scale.height - bgHeight / 2,
-            "backgrounds",
-            randomHillsTexture
-          )
-          .setOrigin(0, 0.5);
-      }
+    for (let i = 0; i < numTiles; i++) {
+      const backgroundTexture = this.currentLevel.bottomBackgrounds[
+        i % this.currentLevel.bottomBackgrounds.length
+      ];
+      this.scene.add
+        .image(
+          i * bgWidth,
+          this.scene.scale.height - bgHeight / 2,
+          "backgrounds",
+          backgroundTexture
+        )
+        .setOrigin(0, 0.5);
     }
   }
 }
