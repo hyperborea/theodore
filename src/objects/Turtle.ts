@@ -8,7 +8,8 @@ export class Turtle extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     this.setScale(4);
-    this.setBounce(0.2);
+    this.setBounce(0.4);
+    this.setCollideWorldBounds(true);
   }
 
   static createAnimations(scene: Phaser.Scene) {
@@ -71,6 +72,6 @@ export class Turtle extends Phaser.Physics.Arcade.Sprite {
   }
 
   playAnimation(animationKey: string) {
-    this.play("turtle-" + animationKey);
+    this.play("turtle-" + animationKey, true);
   }
 }

@@ -11,13 +11,17 @@ export function Game() {
     const game = new Phaser.Game({
       type: Phaser.AUTO,
       parent: containerRef.current,
-      backgroundColor: "#fff",
+      backgroundColor: "#eef",
       pixelArt: true,
-      height: 1000,
+      roundPixels: true,
+      width: 600,
+      height: 600,
       physics: {
         default: "arcade",
         arcade: {
-          gravity: { x: 0, y: 300 },
+          gravity: { x: 0, y: 600 },
+          debug: false,
+          fps: 120, // Increase physics update rate to reduce jitter
         },
       },
       scene: [PreloaderScene, MainScene],
