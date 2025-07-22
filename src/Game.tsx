@@ -19,7 +19,7 @@ export function Game() {
       physics: {
         default: "arcade",
         arcade: {
-          gravity: { x: 0, y: 600 },
+          gravity: { x: 0, y: 900 },
           debug: false,
           fps: 120, // Increase physics update rate to reduce jitter
         },
@@ -30,9 +30,5 @@ export function Game() {
     return () => game.destroy(true);
   }, []);
 
-  return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div ref={containerRef} />
-    </div>
-  );
+  return <div ref={containerRef} />;
 }

@@ -3,19 +3,20 @@ import { Player } from "~/objects/Player";
 import { Turtle } from "~/objects/Turtle";
 import { HealthDisplay } from "~/objects/HealthDisplay";
 import { GameOverPopup } from "~/objects/GameOverPopup";
+import { CharacterSelector } from "~/objects/CharacterSelector";
 
 export class MainScene extends Phaser.Scene {
   private player!: Player;
   private healthDisplay!: HealthDisplay;
   private gameOverPopup!: GameOverPopup;
+  private characterSelector!: CharacterSelector;
+  private platform!: Phaser.Physics.Arcade.StaticGroup;
 
   constructor() {
     super("MainScene");
   }
 
   create() {
-    // this.physics.world.createDebugGraphic();
-
     // Add clouds at the top
     const cloudTexture = this.textures
       .get("backgrounds")
@@ -63,31 +64,30 @@ export class MainScene extends Phaser.Scene {
       this.restartGame();
     });
 
-    const platform = this.physics.add.staticGroup();
+    this.platform = this.physics.add.staticGroup();
     for (let x = 200; x <= 700; x += 64) {
-      platform.create(x, this.scale.height - 32, "tiles", "block_plank");
+      this.platform.create(x, this.scale.height - 32, "tiles", "block_plank");
     }
 
     const platformY = this.scale.height - 32;
-    const player = new Turtle(this, 250, platformY - 32 * 4);
-    player.playAnimation("idle");
+    this.player = new Turtle(this, 250, platformY - 32 * 4);
+    this.setupPlayer(this.player);
 
-    // Set up player health callbacks
-    player.setHealthChangeCallback((health: number) => {
-      this.healthDisplay.updateDisplay(health);
+    // Create character selector
+    this.characterSelector = new CharacterSelector(this, (characterClass) => {
+      this.swapCharacter(characterClass);
     });
 
-    player.setGameOverCallback(() => {
-      this.gameOverPopup.show();
+    // Add interactive sign for character selection
+    const sign = this.add
+      .image(this.scale.width - 32, 32, "tiles", "sign")
+      .setScale(0.5);
+    sign.setInteractive({ cursor: "pointer" });
+    sign.on("pointerdown", () => {
+      this.characterSelector.show();
     });
-
-    // Initialize the health display with full health
-    this.healthDisplay.updateDisplay(player.getCurrentHealth());
-
-    this.physics.add.collider(player, platform);
-    this.player = player;
-
-    this.add.image(this.scale.width - 32, 32, "tiles", "sign").setScale(0.5);
+    sign.on("pointerover", () => sign.setTint(0xffff00));
+    sign.on("pointerout", () => sign.setTint(0xffffff));
   }
 
   update() {
@@ -99,5 +99,37 @@ export class MainScene extends Phaser.Scene {
   private restartGame() {
     this.player.resetHealth();
     this.player.respawn();
+  }
+
+  private setupPlayer(player: Player) {
+    player.playAnimation("idle");
+
+    // Set up player health callbacks
+    player.setHealthChangeCallback((health: number) => {
+      this.healthDisplay.updateDisplay(health);
+    });
+
+    player.setGameOverCallback(() => {
+      this.gameOverPopup.show();
+    });
+
+    this.healthDisplay.updateDisplay(player.getCurrentHealth());
+
+    this.physics.add.collider(player, this.platform);
+  }
+
+  private swapCharacter(
+    characterClass: new (scene: Phaser.Scene, x: number, y: number) => Player
+  ) {
+    if (!this.player) return;
+
+    const currentX = this.player.x;
+    const currentY = this.player.y;
+    const currentHealth = this.player.getCurrentHealth();
+
+    this.player.destroy();
+    this.player = new characterClass(this, currentX, currentY);
+    this.setupPlayer(this.player);
+    this.player.setHealth(currentHealth);
   }
 }

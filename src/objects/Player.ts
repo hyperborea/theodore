@@ -55,8 +55,7 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
       this.jumpCount < this.maxJumps &&
       (this.jumpCount > 0 || this.body?.touching.down)
     ) {
-      console.log(this.jumpCount);
-      this.setVelocityY(-330);
+      this.setVelocityY(-400);
       this.jumpCount++;
       this.jumpKeyPressed = true;
     }
@@ -131,5 +130,12 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
 
   public setGameOverCallback(callback: () => void) {
     this.onGameOverCallback = callback;
+  }
+
+  public setHealth(health: number) {
+    this.currentHealth = Math.max(0, Math.min(health, this.maxHealth));
+    if (this.onHealthChangeCallback) {
+      this.onHealthChangeCallback(this.currentHealth);
+    }
   }
 }
