@@ -4,6 +4,7 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   public jumpCount: number = 0;
   public maxJumps: number = 2;
   protected characterName: string;
+  private jumpKeyPressed: boolean = false;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     super(scene, x, y, texture);
@@ -25,6 +26,40 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
 
   playAnimation(animationKey: string) {
     this.play(`${this.characterName}-${animationKey}`, true);
+  }
+
+  handleControls(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    if (cursors.left?.isDown) {
+      this.setVelocityX(-160);
+      this.setFlipX(true);
+      this.playAnimation("walk");
+    } else if (cursors.right?.isDown) {
+      this.setVelocityX(160);
+      this.setFlipX(false);
+      this.playAnimation("walk");
+    } else {
+      this.setVelocityX(0);
+      this.playAnimation("idle");
+    }
+
+    if (
+      cursors.up?.isDown &&
+      !this.jumpKeyPressed &&
+      this.jumpCount < this.maxJumps
+    ) {
+      console.log(this.jumpCount);
+      this.setVelocityY(-330);
+      this.jumpCount++;
+      this.jumpKeyPressed = true;
+    }
+
+    if (!cursors.up?.isDown) {
+      this.jumpKeyPressed = false;
+    }
+
+    if (this.body?.touching.down && !this.jumpKeyPressed) {
+      this.jumpCount = 0;
+    }
   }
 
   // Subclasses should implement a static createAnimations(scene: Phaser.Scene): void method
