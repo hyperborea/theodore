@@ -28,5 +28,6 @@ export class MainScene extends Phaser.Scene {
   update() {
     const cursors = this.input.keyboard!.createCursorKeys();
     this.player.handleControls(cursors);
+    this.player.handleUpdate();
   }
 }

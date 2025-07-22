@@ -5,11 +5,15 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   public maxJumps: number = 2;
   protected characterName: string;
   private jumpKeyPressed: boolean = false;
+  private spawnX: number;
+  private spawnY: number;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     super(scene, x, y, texture);
 
     this.characterName = texture;
+    this.spawnX = x;
+    this.spawnY = y;
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -59,6 +63,20 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
 
     if (this.body?.touching.down && !this.jumpKeyPressed) {
       this.jumpCount = 0;
+    }
+  }
+
+  respawn() {
+    this.setPosition(this.spawnX, this.spawnY);
+    this.setVelocity(0, 0);
+    this.jumpCount = 0;
+    this.jumpKeyPressed = false;
+    this.playAnimation("idle");
+  }
+
+  handleUpdate() {
+    if (this.y > this.scene.scale.height) {
+      this.respawn();
     }
   }
 
