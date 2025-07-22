@@ -1,14 +1,9 @@
 import Phaser from "phaser";
+import { Player } from "./Player";
 
-export class Fox extends Phaser.Physics.Arcade.Sprite {
+export class Fox extends Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, "fox");
-
-    scene.add.existing(this);
-    scene.physics.add.existing(this);
-
-    this.setScale(4);
-    this.setBounce(0.2);
   }
 
   static createAnimations(scene: Phaser.Scene) {
@@ -62,7 +57,4 @@ export class Fox extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  playAnimation(animationKey: string) {
-    this.play("fox-" + animationKey);
-  }
 }

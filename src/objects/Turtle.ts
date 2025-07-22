@@ -1,18 +1,10 @@
 import Phaser from "phaser";
+import { Player } from "./Player";
 
-export class Turtle extends Phaser.Physics.Arcade.Sprite {
-  public jumpCount: number = 0;
-  public maxJumps: number = 2;
-
+export class Turtle extends Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, "turtle");
-
-    scene.add.existing(this);
-    scene.physics.add.existing(this);
-
-    this.setScale(4);
     this.setBounce(0.4);
-    this.setCollideWorldBounds(true);
   }
 
   static createAnimations(scene: Phaser.Scene) {
@@ -74,7 +66,4 @@ export class Turtle extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  playAnimation(animationKey: string) {
-    this.play("turtle-" + animationKey, true);
-  }
 }

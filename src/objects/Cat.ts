@@ -1,14 +1,9 @@
 import Phaser from "phaser";
+import { Player } from "./Player";
 
-export class Cat extends Phaser.Physics.Arcade.Sprite {
+export class Cat extends Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, "cat");
-
-    scene.add.existing(this);
-    scene.physics.add.existing(this);
-
-    this.setScale(4);
-    this.setBounce(0.2);
   }
 
   static createAnimations(scene: Phaser.Scene) {
@@ -83,7 +78,4 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  playAnimation(animationKey: string) {
-    this.play("cat-" + animationKey);
-  }
 }

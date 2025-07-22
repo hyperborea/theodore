@@ -1,14 +1,9 @@
 import Phaser from "phaser";
+import { Player } from "./Player";
 
-export class RedPanda extends Phaser.Physics.Arcade.Sprite {
+export class RedPanda extends Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, "redpanda");
-
-    scene.add.existing(this);
-    scene.physics.add.existing(this);
-
-    this.setScale(4);
-    this.setBounce(0.2);
   }
 
   static createAnimations(scene: Phaser.Scene) {
@@ -83,7 +78,4 @@ export class RedPanda extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  playAnimation(animationKey: string) {
-    this.play("redpanda-" + animationKey);
-  }
 }

@@ -1,8 +1,9 @@
 import Phaser from "phaser";
+import { Player } from "~/objects/Player";
 import { Turtle } from "~/objects/Turtle";
 
 export class MainScene extends Phaser.Scene {
-  private player!: Turtle;
+  private player!: Player;
   private jumpKeyPressed: boolean = false;
 
   constructor() {
