@@ -16,7 +16,7 @@ export class MainScene extends Phaser.Scene {
 
     const platform = this.physics.add.staticGroup();
     for (let x = 200; x <= 700; x += 64) {
-      platform.create(x, this.scale.height - 32, "platform");
+      platform.create(x, this.scale.height - 32, "tiles", "block_plank");
     }
 
     const platformY = this.scale.height - 32;

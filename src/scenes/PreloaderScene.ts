@@ -52,8 +52,6 @@ export class PreloaderScene extends Phaser.Scene {
       frameHeight: 32,
     });
 
-    this.load.image("platform", platformSpritesheet);
-
     this.load.atlas("tiles", tilesImage, tilesAtlas);
   }
 
