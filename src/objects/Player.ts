@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import { HealthSystem } from "./HealthSystem";
 
 export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   public jumpCount: number = 0;
@@ -8,7 +7,10 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   private jumpKeyPressed: boolean = false;
   private spawnX: number;
   private spawnY: number;
-  private healthSystem?: HealthSystem;
+  private maxHealth: number = 6; // 3 full hearts = 6 half hearts
+  private currentHealth: number = 6;
+  private onHealthChangeCallback?: (health: number) => void;
+  private onGameOverCallback?: () => void;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     super(scene, x, y, texture);
@@ -83,18 +85,51 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   private onDeath() {
-    if (this.healthSystem && !this.healthSystem.isGameOver()) {
-      this.healthSystem.takeDamage();
-    }
-    
-    if (!this.healthSystem || !this.healthSystem.isGameOver()) {
+    this.takeDamage();
+
+    if (!this.isGameOver()) {
       this.respawn();
     }
   }
 
-  public setHealthSystem(healthSystem: HealthSystem) {
-    this.healthSystem = healthSystem;
+  public takeDamage() {
+    if (this.currentHealth <= 0) return;
+
+    this.currentHealth--;
+
+    if (this.onHealthChangeCallback) {
+      this.onHealthChangeCallback(this.currentHealth);
+    }
+
+    if (this.currentHealth <= 0 && this.onGameOverCallback) {
+      this.onGameOverCallback();
+    }
   }
 
-  // Subclasses should implement a static createAnimations(scene: Phaser.Scene): void method
+  public getCurrentHealth(): number {
+    return this.currentHealth;
+  }
+
+  public getMaxHealth(): number {
+    return this.maxHealth;
+  }
+
+  public isGameOver(): boolean {
+    return this.currentHealth <= 0;
+  }
+
+  public resetHealth() {
+    this.currentHealth = this.maxHealth;
+    if (this.onHealthChangeCallback) {
+      this.onHealthChangeCallback(this.currentHealth);
+    }
+  }
+
+  public setHealthChangeCallback(callback: (health: number) => void) {
+    this.onHealthChangeCallback = callback;
+  }
+
+  public setGameOverCallback(callback: () => void) {
+    this.onGameOverCallback = callback;
+  }
 }

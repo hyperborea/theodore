@@ -1,12 +1,12 @@
 import Phaser from "phaser";
 import { Player } from "~/objects/Player";
 import { Turtle } from "~/objects/Turtle";
-import { HealthSystem } from "~/objects/HealthSystem";
+import { HealthDisplay } from "~/objects/HealthDisplay";
 import { GameOverPopup } from "~/objects/GameOverPopup";
 
 export class MainScene extends Phaser.Scene {
   private player!: Player;
-  private healthSystem!: HealthSystem;
+  private healthDisplay!: HealthDisplay;
   private gameOverPopup!: GameOverPopup;
 
   constructor() {
@@ -16,9 +16,13 @@ export class MainScene extends Phaser.Scene {
   create() {
     // this.physics.world.createDebugGraphic();
 
-    this.healthSystem = new HealthSystem(this, 32, 32);
-    this.healthSystem.setGameOverCallback(() => {
-      this.gameOverPopup.show();
+    // Create health display UI
+    this.healthDisplay = new HealthDisplay(this, 32, 32);
+
+    // Create game over popup
+    this.gameOverPopup = new GameOverPopup(this);
+    this.gameOverPopup.setRetryCallback(() => {
+      this.restartGame();
     });
 
     const platform = this.physics.add.staticGroup();
@@ -29,14 +33,21 @@ export class MainScene extends Phaser.Scene {
     const platformY = this.scale.height - 32;
     const player = new Turtle(this, 250, platformY - 32 * 4);
     player.playAnimation("idle");
-    player.setHealthSystem(this.healthSystem);
+    
+    // Set up player health callbacks
+    player.setHealthChangeCallback((health: number) => {
+      this.healthDisplay.updateDisplay(health);
+    });
+    
+    player.setGameOverCallback(() => {
+      this.gameOverPopup.show();
+    });
+    
+    // Initialize the health display with full health
+    this.healthDisplay.updateDisplay(player.getCurrentHealth());
+    
     this.physics.add.collider(player, platform);
     this.player = player;
-
-    this.gameOverPopup = new GameOverPopup(this);
-    this.gameOverPopup.setRetryCallback(() => {
-      this.restartGame();
-    });
   }
 
   update() {
@@ -46,7 +57,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   private restartGame() {
-    this.healthSystem.reset();
+    this.player.resetHealth();
     this.player.respawn();
   }
 }

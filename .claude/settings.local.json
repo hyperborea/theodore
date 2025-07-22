@@ -4,7 +4,8 @@
       "Bash(npm run lint)",
       "Bash(npm run build:*)",
       "Bash(npx tsc:*)",
-      "Bash(timeout 10 npm run dev)"
+      "Bash(timeout 10 npm run dev)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
