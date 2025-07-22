@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { HealthSystem } from "./HealthSystem";
 
 export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   public jumpCount: number = 0;
@@ -7,6 +8,7 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
   private jumpKeyPressed: boolean = false;
   private spawnX: number;
   private spawnY: number;
+  private healthSystem?: HealthSystem;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     super(scene, x, y, texture);
@@ -76,8 +78,22 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
 
   handleUpdate() {
     if (this.y > this.scene.scale.height) {
+      this.onDeath();
+    }
+  }
+
+  private onDeath() {
+    if (this.healthSystem && !this.healthSystem.isGameOver()) {
+      this.healthSystem.takeDamage();
+    }
+    
+    if (!this.healthSystem || !this.healthSystem.isGameOver()) {
       this.respawn();
     }
+  }
+
+  public setHealthSystem(healthSystem: HealthSystem) {
+    this.healthSystem = healthSystem;
   }
 
   // Subclasses should implement a static createAnimations(scene: Phaser.Scene): void method

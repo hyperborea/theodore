@@ -5,7 +5,6 @@ import bumblebeeSpritesheet from "~/assets/bumblebee.png";
 import heroSpritesheet from "~/assets/hero.png";
 import foxSpritesheet from "~/assets/fox.png";
 import redpandaSpritesheet from "~/assets/redpanda.png";
-import platformSpritesheet from "~/assets/platform.png";
 import tilesImage from "~/assets/tiles.png";
 import tilesAtlas from "~/assets/tiles.json";
 import { Cat } from "~/objects/Cat";
