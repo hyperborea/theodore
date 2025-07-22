@@ -16,6 +16,11 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
     this.setScale(4);
     this.setBounce(0.2);
     this.setCollideWorldBounds(true);
+
+    const boxWidth = 20;
+    const boxHeight = 15;
+    this.setSize(boxWidth, boxHeight);
+    this.setOffset((this.width - boxWidth) / 2, this.height - boxHeight);
   }
 
   playAnimation(animationKey: string) {

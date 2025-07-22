@@ -8,7 +8,7 @@ export class Cat extends Player {
 
   static createAnimations(scene: Phaser.Scene) {
     scene.anims.create({
-      key: "cat-idle-1",
+      key: "cat-idle",
       frames: scene.anims.generateFrameNumbers("cat", { start: 0, end: 3 }),
       frameRate: 8,
       repeat: -1,
@@ -77,5 +77,4 @@ export class Cat extends Player {
       repeat: -1,
     });
   }
-
 }

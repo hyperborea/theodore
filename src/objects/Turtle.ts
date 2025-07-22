@@ -4,7 +4,6 @@ import { Player } from "./Player";
 export class Turtle extends Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, "turtle");
-    this.setBounce(0.4);
   }
 
   static createAnimations(scene: Phaser.Scene) {
@@ -65,5 +64,4 @@ export class Turtle extends Player {
       repeat: -1,
     });
   }
-
 }

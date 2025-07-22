@@ -11,17 +11,19 @@ export class MainScene extends Phaser.Scene {
   }
 
   create() {
+    // // Enable physics debug rendering
+    // this.physics.world.createDebugGraphic();
+
     const platform = this.physics.add.staticGroup();
     for (let x = 0; x <= 700; x += 64) {
       platform.create(x, this.scale.height - 32, "platform");
     }
 
     const platformY = this.scale.height - 32;
-    const turtle = new Turtle(this, 100, platformY - 32 * 4);
-    turtle.playAnimation("idle");
-    this.physics.add.collider(turtle, platform);
-
-    this.player = turtle;
+    const player = new Turtle(this, 100, platformY - 32 * 4);
+    player.playAnimation("idle");
+    this.physics.add.collider(player, platform);
+    this.player = player;
   }
 
   update() {
@@ -47,12 +49,16 @@ export class MainScene extends Phaser.Scene {
     }
 
     // Double jump logic - only jump on key press, not hold
-    if (cursors.up?.isDown && !this.jumpKeyPressed && player.jumpCount < player.maxJumps) {
+    if (
+      cursors.up?.isDown &&
+      !this.jumpKeyPressed &&
+      player.jumpCount < player.maxJumps
+    ) {
       player.setVelocityY(-330);
       player.jumpCount++;
       this.jumpKeyPressed = true;
     }
-    
+
     // Reset jump key tracking when released
     if (!cursors.up?.isDown) {
       this.jumpKeyPressed = false;
