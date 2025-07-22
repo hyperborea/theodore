@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.font-pacifico {
+  font-family: "Pacifico", cursive;
+}
