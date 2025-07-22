@@ -1,5 +1,11 @@
+import { Game } from "~/Game";
+
 function App() {
-  return <>hello world</>;
+  return (
+    <>
+      <Game />
+    </>
+  );
 }
 
 export default App;
