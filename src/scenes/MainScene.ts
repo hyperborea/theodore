@@ -4,55 +4,29 @@ import { Turtle } from "~/objects/Turtle";
 import { HealthDisplay } from "~/objects/HealthDisplay";
 import { GameOverPopup } from "~/objects/GameOverPopup";
 import { CharacterSelector } from "~/objects/CharacterSelector";
+import { LevelManager } from "~/objects/LevelManager";
 
 export class MainScene extends Phaser.Scene {
   private player!: Player;
   private healthDisplay!: HealthDisplay;
   private gameOverPopup!: GameOverPopup;
   private characterSelector!: CharacterSelector;
-  private platform!: Phaser.Physics.Arcade.StaticGroup;
+  private platforms!: Phaser.Physics.Arcade.StaticGroup;
+  private levelManager!: LevelManager;
 
   constructor() {
     super("MainScene");
   }
 
   create() {
-    // Add clouds at the top
-    const cloudTexture = this.textures
-      .get("backgrounds")
-      .get("background_clouds");
-    const cloudWidth = cloudTexture.width;
-    const cloudHeight = cloudTexture.height;
-    const numCloudTiles = Math.ceil(this.scale.width / cloudWidth) + 1;
+    // Initialize platform group and level manager
+    this.platforms = this.physics.add.staticGroup();
+    this.levelManager = new LevelManager(this, this.platforms);
 
-    for (let i = 0; i < numCloudTiles; i++) {
-      this.add
-        .image(
-          i * cloudWidth,
-          cloudHeight / 2,
-          "backgrounds",
-          "background_clouds"
-        )
-        .setOrigin(0, 0.5);
-    }
-
-    // Add randomized hills background across the bottom
-    const hillsTextures = ["background_color_hills", "background_color_trees"];
-    const bgWidth = 256;
-    const bgHeight = 256;
-    const numTiles = Math.ceil(this.scale.width / bgWidth) + 1;
-
-    for (let i = 0; i < numTiles; i++) {
-      const randomHillsTexture =
-        hillsTextures[Math.floor(Math.random() * hillsTextures.length)];
-      this.add
-        .image(
-          i * bgWidth,
-          this.scale.height - bgHeight / 2,
-          "backgrounds",
-          randomHillsTexture
-        )
-        .setOrigin(0, 0.5);
+    // Load the first level
+    const level = this.levelManager.loadLevel(1);
+    if (level) {
+      this.player = new Turtle(this, level.playerStartX, level.playerStartY);
     }
 
     // Create health display UI
@@ -64,14 +38,7 @@ export class MainScene extends Phaser.Scene {
       this.restartGame();
     });
 
-    this.platform = this.physics.add.staticGroup();
-    for (let x = 200; x <= 700; x += 64) {
-      this.platform.create(x, this.scale.height - 32, "tiles", "block_plank");
-    }
-
-    const platformY = this.scale.height - 32;
-    this.player = new Turtle(this, 250, platformY - 32 * 4);
-    this.setupPlayer(this.player);
+    this.setupPlayer();
 
     // Create character selector
     this.characterSelector = new CharacterSelector(this, (characterClass) => {
@@ -101,21 +68,21 @@ export class MainScene extends Phaser.Scene {
     this.player.respawn();
   }
 
-  private setupPlayer(player: Player) {
-    player.playAnimation("idle");
+  private setupPlayer() {
+    this.player.playAnimation("idle");
 
     // Set up player health callbacks
-    player.setHealthChangeCallback((health: number) => {
+    this.player.setHealthChangeCallback((health: number) => {
       this.healthDisplay.updateDisplay(health);
     });
 
-    player.setGameOverCallback(() => {
+    this.player.setGameOverCallback(() => {
       this.gameOverPopup.show();
     });
 
-    this.healthDisplay.updateDisplay(player.getCurrentHealth());
+    this.healthDisplay.updateDisplay(this.player.getCurrentHealth());
 
-    this.physics.add.collider(player, this.platform);
+    this.physics.add.collider(this.player, this.platforms);
   }
 
   private swapCharacter(
@@ -129,7 +96,17 @@ export class MainScene extends Phaser.Scene {
 
     this.player.destroy();
     this.player = new characterClass(this, currentX, currentY);
-    this.setupPlayer(this.player);
+    this.setupPlayer();
     this.player.setHealth(currentHealth);
+  }
+
+  loadLevel(levelId: number) {
+    const level = this.levelManager.loadLevel(levelId);
+    if (level) {
+      this.levelManager.createBackground();
+      if (this.player) {
+        this.player.setPosition(level.playerStartX, level.playerStartY);
+      }
+    }
   }
 }
