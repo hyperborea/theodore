@@ -11,7 +11,7 @@ export function Game() {
     const game = new Phaser.Game({
       type: Phaser.AUTO,
       parent: containerRef.current,
-      backgroundColor: "#eef",
+      backgroundColor: "#fff",
       pixelArt: true,
       roundPixels: true,
       width: 64 * 15,

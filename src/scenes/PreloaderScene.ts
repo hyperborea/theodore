@@ -5,6 +5,8 @@ import bumblebeeSpritesheet from "~/assets/bumblebee.png";
 import heroSpritesheet from "~/assets/hero.png";
 import foxSpritesheet from "~/assets/fox.png";
 import redpandaSpritesheet from "~/assets/redpanda.png";
+import backgroundImage from "~/assets/backgrounds.png";
+import backgroundAtlas from "~/assets/backgrounds.json";
 import tilesImage from "~/assets/tiles.png";
 import tilesAtlas from "~/assets/tiles.json";
 import { Cat } from "~/objects/Cat";
@@ -52,6 +54,7 @@ export class PreloaderScene extends Phaser.Scene {
     });
 
     this.load.atlas("tiles", tilesImage, tilesAtlas);
+    this.load.atlas("backgrounds", backgroundImage, backgroundAtlas);
   }
 
   create() {
