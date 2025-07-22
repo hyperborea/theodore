@@ -6,6 +6,7 @@ import { GameOverPopup } from "~/objects/GameOverPopup";
 import { CharacterSelector } from "~/objects/CharacterSelector";
 import { LevelManager } from "~/objects/LevelManager";
 import { Cake } from "~/objects/Cake";
+import { VictoryScreen } from "~/objects/VictoryScreen";
 
 export class MainScene extends Phaser.Scene {
   private player!: Player;
@@ -15,6 +16,7 @@ export class MainScene extends Phaser.Scene {
   private platforms!: Phaser.Physics.Arcade.StaticGroup;
   private levelManager!: LevelManager;
   private cake!: Cake;
+  private victoryScreen!: VictoryScreen;
   private currentLevelId: number = 1;
 
   constructor() {
@@ -42,6 +44,9 @@ export class MainScene extends Phaser.Scene {
     this.gameOverPopup.setRetryCallback(() => {
       this.restartGame();
     });
+
+    // Create victory screen
+    this.victoryScreen = new VictoryScreen(this);
 
     this.setupPlayer();
 
@@ -73,6 +78,7 @@ export class MainScene extends Phaser.Scene {
     this.player.respawn();
   }
 
+
   private loadNextLevel() {
     this.currentLevelId++;
     const nextLevel = this.levelManager.loadLevel(this.currentLevelId);
@@ -100,7 +106,8 @@ export class MainScene extends Phaser.Scene {
 
       console.log(`Loaded level ${this.currentLevelId}: ${nextLevel.name}`);
     } else {
-      console.log("Congratulations! You completed all levels!");
+      // Show victory screen when all levels are completed
+      this.victoryScreen.show();
     }
   }
 
