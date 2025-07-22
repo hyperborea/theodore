@@ -109,4 +109,39 @@ export const levels: Level[] = [
       hills: true,
     },
   },
+  {
+    id: 4,
+    name: "Ultimate Challenge",
+    platforms: [
+      // Starting platform (bottom center)
+      { x: 8, y: 1 },
+
+      // Left side - single jump path
+      { x: 5, y: 2 },
+      { x: 3, y: 3 },
+
+      // Right side - requires double jump
+      { x: 11, y: 3 },
+
+      // Middle high platform - requires double jump from either side
+      { x: 8, y: 5 },
+
+      // Left upper - single jump from middle high
+      { x: 6, y: 6 },
+
+      // Right upper - requires double jump from middle high
+      { x: 12, y: 7 },
+
+      // Final platform with cake - requires double jump
+      { x: 9, y: 8 },
+    ],
+    playerStartX: 420,
+    playerStartY: 550,
+    cakeX: 544,
+    cakeY: 100,
+    background: {
+      clouds: true,
+      hills: true,
+    },
+  },
 ];

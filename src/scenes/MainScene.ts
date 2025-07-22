@@ -17,7 +17,7 @@ export class MainScene extends Phaser.Scene {
   private levelManager!: LevelManager;
   private cake!: Cake;
   private victoryScreen!: VictoryScreen;
-  private currentLevelId: number = 1;
+  private currentLevelId: number = 4;
 
   constructor() {
     super("MainScene");
@@ -78,7 +78,6 @@ export class MainScene extends Phaser.Scene {
     this.player.respawn();
   }
 
-
   private loadNextLevel() {
     this.currentLevelId++;
     const nextLevel = this.levelManager.loadLevel(this.currentLevelId);
@@ -108,6 +107,7 @@ export class MainScene extends Phaser.Scene {
     } else {
       // Show victory screen when all levels are completed
       this.victoryScreen.show();
+      this.currentLevelId = 1;
     }
   }
 

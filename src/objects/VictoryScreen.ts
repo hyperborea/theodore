@@ -3,7 +3,6 @@ import Phaser from "phaser";
 export class VictoryScreen extends Phaser.GameObjects.Container {
   private background!: Phaser.GameObjects.Rectangle;
   private titleText!: Phaser.GameObjects.Text;
-  private messageText!: Phaser.GameObjects.Text;
   private birthdayText!: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene) {
@@ -96,7 +95,6 @@ export class VictoryScreen extends Phaser.GameObjects.Container {
 
     // Scale in animation for elements
     this.titleText.setScale(0);
-    this.messageText.setScale(0);
     this.birthdayText.setScale(0);
 
     this.scene.tweens.add({
@@ -104,14 +102,6 @@ export class VictoryScreen extends Phaser.GameObjects.Container {
       scale: 1,
       duration: 600,
       delay: 200,
-      ease: "Back.easeOut",
-    });
-
-    this.scene.tweens.add({
-      targets: [this.messageText],
-      scale: 1,
-      duration: 600,
-      delay: 400,
       ease: "Back.easeOut",
     });
 
