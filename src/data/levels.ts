@@ -12,6 +12,8 @@ export type Level = {
   platforms: Platform[];
   playerStartX: number;
   playerStartY: number;
+  cakeX: number;
+  cakeY: number;
   background?: {
     clouds?: boolean;
     hills?: boolean;
@@ -41,6 +43,37 @@ export const levels: Level[] = [
     ],
     playerStartX: 0,
     playerStartY: 550,
+    cakeX: 200,
+    cakeY: 550,
+    background: {
+      clouds: true,
+      hills: true,
+    },
+  },
+  {
+    id: 2,
+    name: "Second Challenge",
+    platforms: [
+      { x: 1, y: 1 },
+      { x: 2, y: 1 },
+      { x: 3, y: 1 },
+
+      { x: 5, y: 2 },
+      { x: 6, y: 2 },
+
+      { x: 8, y: 3 },
+      { x: 9, y: 3 },
+      { x: 10, y: 3 },
+
+      { x: 12, y: 1 },
+      { x: 13, y: 1 },
+      { x: 14, y: 1 },
+      { x: 15, y: 1 },
+    ],
+    playerStartX: 0,
+    playerStartY: 550,
+    cakeX: 950,
+    cakeY: 450,
     background: {
       clouds: true,
       hills: true,

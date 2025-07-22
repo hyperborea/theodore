@@ -9,6 +9,7 @@ import backgroundImage from "~/assets/backgrounds.png";
 import backgroundAtlas from "~/assets/backgrounds.json";
 import tilesImage from "~/assets/tiles.png";
 import tilesAtlas from "~/assets/tiles.json";
+import cakesSpritesheet from "~/assets/cakes2.png";
 import { Cat } from "~/objects/Cat";
 import { Turtle } from "~/objects/Turtle";
 import { Bumblebee } from "~/objects/Bumblebee";
@@ -49,6 +50,11 @@ export class PreloaderScene extends Phaser.Scene {
     });
 
     this.load.spritesheet("redpanda", redpandaSpritesheet, {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
+    this.load.spritesheet("cakes", cakesSpritesheet, {
       frameWidth: 32,
       frameHeight: 32,
     });

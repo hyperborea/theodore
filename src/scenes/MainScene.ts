@@ -5,6 +5,7 @@ import { HealthDisplay } from "~/objects/HealthDisplay";
 import { GameOverPopup } from "~/objects/GameOverPopup";
 import { CharacterSelector } from "~/objects/CharacterSelector";
 import { LevelManager } from "~/objects/LevelManager";
+import { Cake } from "~/objects/Cake";
 
 export class MainScene extends Phaser.Scene {
   private player!: Player;
@@ -13,6 +14,8 @@ export class MainScene extends Phaser.Scene {
   private characterSelector!: CharacterSelector;
   private platforms!: Phaser.Physics.Arcade.StaticGroup;
   private levelManager!: LevelManager;
+  private cake!: Cake;
+  private currentLevelId: number = 1;
 
   constructor() {
     super("MainScene");
@@ -24,9 +27,11 @@ export class MainScene extends Phaser.Scene {
     this.levelManager = new LevelManager(this, this.platforms);
 
     // Load the first level
-    const level = this.levelManager.loadLevel(1);
+    const level = this.levelManager.loadLevel(this.currentLevelId);
     if (level) {
       this.player = new Turtle(this, level.playerStartX, level.playerStartY);
+      // Create cake at level-configured position
+      this.cake = new Cake(this, level.cakeX, level.cakeY, 0);
     }
 
     // Create health display UI
@@ -68,6 +73,37 @@ export class MainScene extends Phaser.Scene {
     this.player.respawn();
   }
 
+  private loadNextLevel() {
+    this.currentLevelId++;
+    const nextLevel = this.levelManager.loadLevel(this.currentLevelId);
+
+    if (nextLevel) {
+      // Destroy current cake and create new one at new level position
+      this.cake.destroy();
+      this.cake = new Cake(
+        this,
+        nextLevel.cakeX,
+        nextLevel.cakeY,
+        this.currentLevelId - 1
+      );
+
+      // Add overlap detection between player and cake
+      this.physics.add.overlap(this.player, this.cake, () =>
+        this.loadNextLevel()
+      );
+
+      // Move player to new level start position
+      this.player.setPosition(nextLevel.playerStartX, nextLevel.playerStartY);
+
+      // Move player to top of display stack
+      this.children.bringToTop(this.player);
+
+      console.log(`Loaded level ${this.currentLevelId}: ${nextLevel.name}`);
+    } else {
+      console.log("Congratulations! You completed all levels!");
+    }
+  }
+
   private setupPlayer() {
     this.player.playAnimation("idle");
 
@@ -83,6 +119,11 @@ export class MainScene extends Phaser.Scene {
     this.healthDisplay.updateDisplay(this.player.getCurrentHealth());
 
     this.physics.add.collider(this.player, this.platforms);
+
+    // Add overlap detection between player and cake
+    this.physics.add.overlap(this.player, this.cake, () => {
+      this.loadNextLevel();
+    });
   }
 
   private swapCharacter(
