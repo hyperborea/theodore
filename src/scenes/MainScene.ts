@@ -10,8 +10,9 @@ export class MainScene extends Phaser.Scene {
   }
 
   create() {
-    // // Enable physics debug rendering
     // this.physics.world.createDebugGraphic();
+
+    this.add.image(32, 32, "tiles", "hud_heart");
 
     const platform = this.physics.add.staticGroup();
     for (let x = 200; x <= 700; x += 64) {
