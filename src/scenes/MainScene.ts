@@ -30,9 +30,11 @@ export class MainScene extends Phaser.Scene {
     const cursors = this.input.keyboard!.createCursorKeys();
     if (cursors.left?.isDown) {
       player.setVelocityX(-160);
+      player.setFlipX(true);
       player.playAnimation("walk");
     } else if (cursors.right?.isDown) {
       player.setVelocityX(160);
+      player.setFlipX(false);
       player.playAnimation("walk");
     } else {
       player.setVelocityX(0);
