@@ -48,50 +48,50 @@ export const levels: Level[] = [
     id: 2,
     name: "Second Challenge",
     platforms: [
-      { x: 1, y: 1, frame: "terrain_sand_block_top_left" },
-      { x: 2, y: 1, frame: "terrain_sand_block_top" },
-      { x: 3, y: 1, frame: "terrain_sand_block_top_right" },
+      { x: 1, y: 3, frame: "terrain_sand_cloud" },
+      { x: 2, y: 2, frame: "terrain_sand_cloud" },
+      { x: 3, y: 1, frame: "terrain_sand_cloud" },
 
-      { x: 5, y: 2, frame: "terrain_sand_cloud_left" },
-      { x: 6, y: 2, frame: "terrain_sand_cloud_right" },
+      { x: 5, y: 1, frame: "terrain_sand_cloud_left" },
+      { x: 6, y: 1, frame: "terrain_sand_cloud_right" },
 
-      { x: 8, y: 3, frame: "terrain_sand_cloud_left" },
-      { x: 9, y: 3, frame: "terrain_sand_cloud_middle" },
-      { x: 10, y: 3, frame: "terrain_sand_cloud_right" },
+      { x: 8, y: 2, frame: "terrain_sand_cloud" },
+      { x: 9, y: 3, frame: "terrain_sand_cloud" },
+      { x: 10, y: 4, frame: "terrain_sand_cloud" },
 
-      { x: 12, y: 4, frame: "terrain_sand_cloud_left" },
-      { x: 13, y: 4, frame: "terrain_sand_cloud_middle" },
-      { x: 14, y: 4, frame: "terrain_sand_cloud_middle" },
-      { x: 15, y: 4, frame: "terrain_sand_cloud_right" },
+      { x: 12, y: 5, frame: "terrain_sand_cloud_left" },
+      { x: 13, y: 5, frame: "terrain_sand_cloud_right" },
+      { x: 14, y: 6, frame: "terrain_sand_cloud" },
+      { x: 15, y: 7, frame: "terrain_sand_cloud" },
     ],
     playerStartX: 0,
-    playerStartY: 550,
-    cakeX: 900,
-    cakeY: 350,
+    playerStartY: 420,
+    cakeX: 920,
+    cakeY: 150,
     bottomBackgrounds: ["background_color_desert"],
   },
   {
     id: 3,
     name: "Double Jump Challenge",
     platforms: [
-      // Starting platform
-      { x: 1, y: 1, frame: "terrain_stone_block_top_left" },
-      { x: 2, y: 1, frame: "terrain_stone_block_top" },
-      { x: 3, y: 1, frame: "terrain_stone_block_top_right" },
+      { x: 4, y: 1, frame: "terrain_stone_block_top_left" },
+      { x: 5, y: 1, frame: "terrain_stone_block_top" },
+      { x: 6, y: 1, frame: "terrain_stone_block_top_right" },
 
-      // First jump platform (medium height)
-      { x: 6, y: 3, frame: "terrain_stone_cloud_left" },
-      { x: 7, y: 3, frame: "terrain_stone_cloud_right" },
+      { x: 1, y: 3, frame: "terrain_stone_cloud_left" },
+      { x: 2, y: 3, frame: "terrain_stone_cloud_right" },
 
-      // Second platform (higher, requires double jump)
-      { x: 10, y: 5, frame: "terrain_stone_cloud_left" },
-      { x: 11, y: 5, frame: "terrain_stone_cloud_right" },
+      { x: 5, y: 5, frame: "terrain_stone_cloud_left" },
+      { x: 6, y: 5, frame: "terrain_stone_cloud_right" },
 
-      // Final platform where cake is located (very high)
+      { x: 8, y: 7, frame: "terrain_stone_cloud_left" },
+      { x: 9, y: 7, frame: "terrain_stone_cloud_middle" },
+      { x: 10, y: 7, frame: "terrain_stone_cloud_right" },
+
       { x: 14, y: 6, frame: "terrain_stone_cloud_left" },
       { x: 15, y: 6, frame: "terrain_stone_cloud_right" },
     ],
-    playerStartX: 0,
+    playerStartX: 250,
     playerStartY: 550,
     cakeX: 900,
     cakeY: 220,

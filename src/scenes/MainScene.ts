@@ -107,7 +107,7 @@ export class MainScene extends Phaser.Scene {
     } else {
       // Show victory screen when all levels are completed
       this.victoryScreen.show();
-      this.currentLevelId = 1;
+      this.currentLevelId = 0;
     }
   }
 
