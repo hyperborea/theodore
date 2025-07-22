@@ -99,14 +99,4 @@ export class MainScene extends Phaser.Scene {
     this.setupPlayer();
     this.player.setHealth(currentHealth);
   }
-
-  loadLevel(levelId: number) {
-    const level = this.levelManager.loadLevel(levelId);
-    if (level) {
-      this.levelManager.createBackground();
-      if (this.player) {
-        this.player.setPosition(level.playerStartX, level.playerStartY);
-      }
-    }
-  }
 }

@@ -39,8 +39,8 @@ export const levels: Level[] = [
       { x: 14, y: 1 },
       { x: 15, y: 1 },
     ],
-    playerStartX: 50,
-    playerStartY: 500,
+    playerStartX: 0,
+    playerStartY: 550,
     background: {
       clouds: true,
       hills: true,

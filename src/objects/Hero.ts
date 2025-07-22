@@ -5,7 +5,7 @@ export class Hero extends Player {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, "hero");
 
-    const boxWidth = 20;
+    const boxWidth = 10;
     const boxHeight = 22;
     this.setSize(boxWidth, boxHeight);
     this.setOffset((this.width - boxWidth) / 2, this.height - boxHeight - 1);

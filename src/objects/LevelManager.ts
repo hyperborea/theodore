@@ -54,8 +54,6 @@ export class LevelManager {
           );
         }
       } else {
-        console.log(platform);
-        console.log(platform.x * 64, this.scene.scale.height - platform.y * 64);
         // Single platform
         this.platforms.create(
           (platform.x - 0.5) * 64,

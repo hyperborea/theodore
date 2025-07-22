@@ -19,13 +19,13 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
     this.spawnX = x;
     this.spawnY = y;
 
-    scene.add.existing(this);
+    scene.add.existing(this).setOrigin(0, 1);
     scene.physics.add.existing(this);
 
     this.setScale(4);
     this.setBounce(0.2);
 
-    const boxWidth = 20;
+    const boxWidth = 10;
     const boxHeight = 15;
     this.setSize(boxWidth, boxHeight);
     this.setOffset((this.width - boxWidth) / 2, this.height - boxHeight);
