@@ -18,6 +18,7 @@ export class HealthDisplay {
         "hud_heart"
       );
       heart.setScrollFactor(0); // Keep hearts fixed on screen
+      heart.setDepth(20);
       this.hearts.push(heart);
     }
   }
@@ -39,7 +40,7 @@ export class HealthDisplay {
   }
 
   public destroy() {
-    this.hearts.forEach(heart => heart.destroy());
+    this.hearts.forEach((heart) => heart.destroy());
     this.hearts = [];
   }
 }

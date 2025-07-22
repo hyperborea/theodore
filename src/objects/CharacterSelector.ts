@@ -64,6 +64,7 @@ export class CharacterSelector extends Phaser.GameObjects.Container {
     this.setActive(false);
 
     scene.add.existing(this);
+    this.setDepth(1100);
   }
 
   private createCharacterPreviews() {

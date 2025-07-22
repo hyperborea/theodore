@@ -58,7 +58,8 @@ export class MainScene extends Phaser.Scene {
     // Add interactive sign for character selection
     const sign = this.add
       .image(this.scale.width - 32, 32, "tiles", "sign")
-      .setScale(0.5);
+      .setScale(0.5)
+      .setDepth(20);
     sign.setInteractive({ cursor: "pointer" });
     sign.on("pointerdown", () => {
       this.characterSelector.show();
@@ -74,8 +75,10 @@ export class MainScene extends Phaser.Scene {
   }
 
   private restartGame() {
+    this.currentLevelId = 0;
+    this.loadNextLevel();
     this.player.resetHealth();
-    this.player.respawn();
+    // this.player.respawn();
   }
 
   private loadNextLevel() {
@@ -98,10 +101,7 @@ export class MainScene extends Phaser.Scene {
       );
 
       // Move player to new level start position
-      this.player.setPosition(nextLevel.playerStartX, nextLevel.playerStartY);
-
-      // Move player to top of display stack
-      this.children.bringToTop(this.player);
+      this.player.spawn(nextLevel.playerStartX, nextLevel.playerStartY);
 
       console.log(`Loaded level ${this.currentLevelId}: ${nextLevel.name}`);
     } else {

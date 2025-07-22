@@ -9,6 +9,7 @@ export class GameOverPopup {
     this.scene = scene;
     this.container = scene.add.container(0, 0);
     this.createPopup();
+    this.container.setDepth(30);
     this.hide();
   }
 

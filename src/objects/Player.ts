@@ -20,6 +20,7 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
     this.spawnY = y;
 
     scene.add.existing(this).setOrigin(0, 1);
+    this.setDepth(10);
     scene.physics.add.existing(this);
 
     this.setScale(4);
@@ -67,6 +68,12 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.body?.touching.down && !this.jumpKeyPressed) {
       this.jumpCount = 0;
     }
+  }
+
+  spawn(spawnX: number, spawnY: number) {
+    this.spawnX = spawnX;
+    this.spawnY = spawnY;
+    this.setPosition(spawnX, spawnY);
   }
 
   respawn() {
