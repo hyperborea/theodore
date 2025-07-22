@@ -14,8 +14,8 @@ export function Game() {
       backgroundColor: "#eef",
       pixelArt: true,
       roundPixels: true,
-      width: 600,
-      height: 600,
+      width: 64 * 15,
+      height: 64 * 10,
       physics: {
         default: "arcade",
         arcade: {
@@ -30,5 +30,9 @@ export function Game() {
     return () => game.destroy(true);
   }, []);
 
-  return <div ref={containerRef} className="w-screen h-screen" />;
+  return (
+    <div className="w-screen h-screen flex justify-center items-center">
+      <div ref={containerRef} />
+    </div>
+  );
 }

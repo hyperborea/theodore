@@ -14,12 +14,12 @@ export class MainScene extends Phaser.Scene {
     // this.physics.world.createDebugGraphic();
 
     const platform = this.physics.add.staticGroup();
-    for (let x = 0; x <= 700; x += 64) {
+    for (let x = 200; x <= 700; x += 64) {
       platform.create(x, this.scale.height - 32, "platform");
     }
 
     const platformY = this.scale.height - 32;
-    const player = new Turtle(this, 100, platformY - 32 * 4);
+    const player = new Turtle(this, 250, platformY - 32 * 4);
     player.playAnimation("idle");
     this.physics.add.collider(player, platform);
     this.player = player;

@@ -16,7 +16,6 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.setScale(4);
     this.setBounce(0.2);
-    this.setCollideWorldBounds(true);
 
     const boxWidth = 20;
     const boxHeight = 15;
@@ -45,7 +44,8 @@ export abstract class Player extends Phaser.Physics.Arcade.Sprite {
     if (
       cursors.up?.isDown &&
       !this.jumpKeyPressed &&
-      this.jumpCount < this.maxJumps
+      this.jumpCount < this.maxJumps &&
+      (this.jumpCount > 0 || this.body?.touching.down)
     ) {
       console.log(this.jumpCount);
       this.setVelocityY(-330);
