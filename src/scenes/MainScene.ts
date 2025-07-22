@@ -15,7 +15,7 @@ export class MainScene extends Phaser.Scene {
   private platforms!: Phaser.Physics.Arcade.StaticGroup;
   private levelManager!: LevelManager;
   private cake!: Cake;
-  private currentLevelId: number = 1;
+  private currentLevelId: number = 2;
 
   constructor() {
     super("MainScene");

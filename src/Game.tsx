@@ -2,6 +2,9 @@ import { useEffect, useRef } from "react";
 import { PreloaderScene } from "~/scenes/PreloaderScene";
 import { MainScene } from "~/scenes/MainScene";
 
+const width = 64 * 15;
+const height = 64 * 10;
+
 export function Game() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -14,8 +17,8 @@ export function Game() {
       backgroundColor: "#fff",
       pixelArt: true,
       roundPixels: true,
-      width: 64 * 15,
-      height: 64 * 10,
+      width,
+      height,
       physics: {
         default: "arcade",
         arcade: {
@@ -30,5 +33,5 @@ export function Game() {
     return () => game.destroy(true);
   }, []);
 
-  return <div ref={containerRef} />;
+  return <div ref={containerRef} style={{ width, height }} />;
 }
